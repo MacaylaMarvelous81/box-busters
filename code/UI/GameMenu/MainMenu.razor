@@ -1,0 +1,40 @@
+﻿@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+@using Button = JomarM.BoxBusters.UI.Components.Button
+
+@namespace JomarM.BoxBusters.UI.GameMenu
+@attribute [Route( "/" )]
+@attribute [StyleSheet]
+
+<root>
+	<div class="title">
+		@Game.Menu.Package.Title
+	</div>
+	<div class="controls">
+		@if ( Game.InGame )
+		{
+			<Button OnClick=@LeaveGame Label="#menu.main.leave" />
+		}
+		else
+		{
+			<Button Destination="/create" Label="#menu.main.play" />
+			<Button Destination="/lobby/list" Label="#menu.main.lobbies" />
+		}
+		
+		<Button OnClick=@Quit Label="#menu.main.quit" />
+	</div>
+</root>
+
+@code
+{
+	void LeaveGame()
+	{
+		Game.Menu.LeaveServer( "Leaving game" );
+	}
+
+	void Quit()
+	{
+		Game.Menu.Close();
+	}
+}

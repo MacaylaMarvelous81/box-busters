@@ -1,0 +1,13 @@
+{
+	"menu.main.leave": "Leave",
+	"menu.main.play": "Play",
+	"menu.main.lobbies": "Lobbies",
+	"menu.main.quit": "Quit",
+	"menu.create.cancel": "Cancel",
+	"menu.create.start": "Start",
+	"menu.create.map.label": "Map",
+	"menu.create.servername.label": "Server Name",
+	"menu.create.servername.tooltip": "The name of the server, shown in the lobby list.",
+	"menu.create.playerlimit.label": "Max Players",
+	"menu.create.playerlimit.tooltip": "The maximum amount of players the server will accept.",
+}

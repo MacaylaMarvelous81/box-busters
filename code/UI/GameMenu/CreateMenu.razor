@@ -1,0 +1,55 @@
+﻿@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+@using Sandbox.UI.GameMenu
+@using Button = JomarM.BoxBusters.UI.Components.Button
+
+@namespace JomarM.BoxBusters.UI.GameMenu
+@attribute [Route( "/create" )]
+@attribute [StyleSheet]
+
+<root class="layout">
+	<div class="body columned">
+		<div class="left">
+			<div class="form scroll">
+				<FormGroup>
+					<Label>#menu.create.servername.label</Label>
+					<Control>
+						<TextEntry Value:bind=@ServerName Tooltip="#menu.create.servername.tooltip"/>
+					</Control>
+				</FormGroup>
+				<FormGroup class="form-group">
+					<Label>#menu.create.playerlimit.label</Label>
+					<Control>
+						<SliderControl Value:bind=@MaxPlayers ShowTextEntry ShowRange Min=@(1f) Max=@(64f) Tooltip="#menu.create.playerlimit.tooltip"/>
+					</Control>
+				</FormGroup>
+			</div>
+			<div class="control-row">
+				<Button Destination="/" Label="#menu.create.cancel" />
+				<Button OnClick=@Start Label="#menu.create.start" />
+			</div>
+		</div>
+		<div class="right">
+			<h2 class="info">#menu.create.map.label</h2>
+			<MapButton MapIdent=@Map OnClicked=@SelectMap />
+		</div>
+	</div>
+</root>
+
+@code
+{
+	public string ServerName { get; set; } = Game.Menu.Package.Title;
+	public float MaxPlayers { get; set; } = 8f;
+	public string Map { get; set; } = "facepunch.flatgrass";
+	
+	public void SelectMap()
+	{
+		Game.Overlay.ShowPackageSelector( "type:map sort:popular", ( map ) =>
+		{
+			Map = map.FullIdent;
+		} );
+	}
+	
+	public void Start() {}
+}

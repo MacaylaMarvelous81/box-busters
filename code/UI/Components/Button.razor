@@ -1,0 +1,15 @@
+﻿@using System
+@using Sandbox.UI
+
+@namespace JomarM.BoxBusters.UI.Components
+@attribute [StyleSheet]
+
+<a class="button" onclick=@OnClick href=@Destination>@Label</a>
+
+@code
+{
+	public Action OnClick { get; set; }
+	
+	public string Label { get; set; }
+	public string Destination { get; set; }
+}

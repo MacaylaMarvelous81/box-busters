@@ -1,0 +1,11 @@
+*.csproj
+obj/*
+Properties/*
+code/obj/*
+code/Properties/*
+
+# Auto-generated asset related files
+*.generated.*
+*.*_c
+*.los
+*.vpk
