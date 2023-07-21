@@ -98,3 +98,9 @@ csharp_space_between_square_brackets = false
 # Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+
+# CSS/SCSS files
+[*.{css,scss}]
+indent_style = tab
+indent_size = 4
+tab_size = 4
