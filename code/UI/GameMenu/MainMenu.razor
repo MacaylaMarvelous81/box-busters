@@ -1,4 +1,4 @@
-﻿@using Sandbox
+@using Sandbox
 @using Sandbox.Razor
 @using Sandbox.UI
 @using Button = JomarM.BoxBusters.UI.Components.Button
@@ -19,7 +19,7 @@
 		else
 		{
 			<Button Destination="/create" Label="#menu.main.play" />
-			<Button Destination="/lobby/list" Label="#menu.main.lobbies" />
+			<Button Destination="/server/list" Label="#menu.main.servers" />
 		}
 		
 		<Button OnClick=@Quit Label="#menu.main.quit" />
