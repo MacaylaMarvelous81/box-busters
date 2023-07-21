@@ -1,4 +1,4 @@
-@using System
+﻿@using System
 @using Sandbox
 @using Sandbox.Razor
 @using Sandbox.UI
@@ -38,5 +38,10 @@
 	void Quit()
 	{
 		Game.Menu.Close();
+	}
+
+	protected override int BuildHash()
+	{
+		return HashCode.Combine( Game.InGame );
 	}
 }

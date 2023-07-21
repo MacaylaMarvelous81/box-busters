@@ -17,6 +17,11 @@
 
     &.ingame {
         background-color: #151313ee;
+        opacity: 0.7;
+        
+        & .background {
+            display: none;
+        }
     }
 }
 
@@ -31,10 +36,6 @@
     mask: linear-gradient( 45deg, white, white, black );
     mask-scope: filter;
     background-repeat: no-repeat;
-
-    &.ingame {
-        display: none;
-    }
 }
 
 .navigator-canvas {
