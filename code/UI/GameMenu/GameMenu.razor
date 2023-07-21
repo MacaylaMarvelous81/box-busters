@@ -1,15 +1,17 @@
-﻿@using Sandbox
+@using System
+@using Sandbox
 @using Sandbox.Menu
 @using Sandbox.UI
 
-@namespace JomarM.BoxBusters.UI.GameMenu
+@namespace BoxBusters.UI.GameMenu
 @attribute [StyleSheet]
 @implements IGameMenuPanel
 @inherits NavHostPanel
 
 <root>
 	<div class="background" />
-	<div class="navigator-canvas" slot="navigator-canvas" />
+
+		<div class="navigator-canvas" slot="navigator-canvas"/>
 </root>
 
 @code
