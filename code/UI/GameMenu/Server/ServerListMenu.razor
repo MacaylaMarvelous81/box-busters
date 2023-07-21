@@ -1,0 +1,39 @@
+﻿@using BoxBusters.UI.Templates
+@using Sandbox
+@using Sandbox.Razor
+@using Sandbox.UI
+@using Button = BoxBusters.UI.Components.Button
+
+@namespace BoxBusters.UI.GameMenu.Server
+@attribute [Route( "/server/list" )]
+@attribute [StyleSheet]
+
+<root>
+	<div class="list">
+		<!--
+		TODO: Use custom server list in place of ServerListPanel [enhancement] [menu]
+		ServerListPanel is tailored for the default game menu, so it assumes its classes and structure, which are
+		different in this game menu. Using a custom server list would also enable more customization over the server
+		list (for example, changing the text to use localized strings). It would also help keep the game menu
+		consistent in case of a s&box update, since updates to the base library's server list would reflect to this
+		server list, and would break if it was deleted.
+		-->
+		<ServerListPanel @ref="_serverList" ShowGame=@false FilterByGame=@Game.Menu.Package.FullIdent/>
+	</div>
+	<ControlRow>
+		<Controls>
+			<Button Destination="/" Label="Back" />
+			<Button OnClick=@Refresh Label="Refresh" />
+		</Controls>
+	</ControlRow>
+</root>
+
+@code
+{
+	private ServerListPanel _serverList;
+
+	public void Refresh()
+	{
+		_serverList.Refresh();
+	}
+}
