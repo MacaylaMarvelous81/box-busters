@@ -1,4 +1,6 @@
+﻿@using JomarM.BoxBusters.UI.Templates
 @using Sandbox
+@using Sandbox.Menu
 @using Sandbox.Razor
 @using Sandbox.UI
 @using Sandbox.UI.GameMenu
@@ -26,10 +28,12 @@
 					</Control>
 				</FormGroup>
 			</div>
-			<div class="control-row">
-				<Button Destination="/" Label="#menu.create.cancel" />
-				<Button OnClick=@Start Label="#menu.create.start" />
-			</div>
+			<ControlRow>
+				<Controls>
+					<Button Destination="/" Label="#menu.create.cancel" />
+					<Button OnClick=@Start Label="#menu.create.start" />
+				</Controls>
+			</ControlRow>
 		</div>
 		<div class="right">
 			<h2 class="info">#menu.create.map.label</h2>

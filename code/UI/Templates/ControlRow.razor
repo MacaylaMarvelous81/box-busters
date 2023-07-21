@@ -1,0 +1,12 @@
+﻿@using Sandbox.Razor
+@using Sandbox.UI
+
+@namespace JomarM.BoxBusters.UI.Templates
+@attribute [StyleSheet]
+
+<root class="control-row">@Controls</root>
+
+@code
+{
+	public RenderFragment Controls { get; set; }
+}
