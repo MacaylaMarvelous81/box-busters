@@ -64,10 +64,17 @@ namespace BoxBusters.Entities
 			ViewAngles = newViewAngles;
 		}
 
+		public override void Simulate( IClient cl )
+		{
+			EyeRotation = ViewAngles.ToRotation();
+			Rotation = ViewAngles.WithPitch( 0 ).ToRotation();
+		}
+
 		public override void FrameSimulate( IClient cl )
 		{
 			EyeRotation = ViewAngles.ToRotation();
-
+			Rotation = ViewAngles.WithPitch( 0 ).ToRotation();
+			
 			Camera.Rotation = EyeRotation;
 			Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 			Camera.FirstPersonViewer = this;
