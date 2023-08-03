@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using BoxBusters.Entities.Components;
 using Sandbox;
 
 namespace BoxBusters.Entities
@@ -38,6 +39,8 @@ namespace BoxBusters.Entities
 			EnableDrawing = true;
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
+
+			Components.Create<PlayerPawnController>();
 		}
 
 		public override void BuildInput()
@@ -68,6 +71,9 @@ namespace BoxBusters.Entities
 		{
 			EyeRotation = ViewAngles.ToRotation();
 			Rotation = ViewAngles.WithPitch( 0 ).ToRotation();
+			EyeLocalPosition = Vector3.Up * (64f * Scale);
+			
+			Components.Get<PlayerPawnController>().Simulate( cl );
 		}
 
 		public override void FrameSimulate( IClient cl )
@@ -79,6 +85,28 @@ namespace BoxBusters.Entities
 			Camera.FieldOfView = Screen.CreateVerticalFieldOfView( Game.Preferences.FieldOfView );
 			Camera.FirstPersonViewer = this;
 			Camera.Position = EyePosition;
+		}
+		
+		public TraceResult TraceBoundingBox( Vector3 start, Vector3 end, float liftFeet = 0.0f )
+		{
+			return TraceBoundingBox( start, end, CollisionBounds.Mins, CollisionBounds.Maxs, liftFeet );
+		}
+
+		public TraceResult TraceBoundingBox( Vector3 start, Vector3 end, Vector3 boundMin, Vector3 boundMax, float liftFeet = 0.0f )
+		{
+			if ( liftFeet > 0 )
+			{
+				start += Vector3.Up * liftFeet;
+				boundMax = boundMax.WithZ( boundMax.z - liftFeet );
+			}
+
+			TraceResult tr = Trace.Ray( start, end )
+				.Size( boundMin, boundMax )
+				.WithAnyTags( "solid", "playerclip", "passbullets" )
+				.Ignore( this )
+				.Run();
+
+			return tr;
 		}
 	}
 }
