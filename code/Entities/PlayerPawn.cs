@@ -32,6 +32,8 @@ namespace BoxBusters.Entities
 		[ClientInput]
 		public Angles ViewAngles { get; private set; }
 		
+		public BBox Hull { get; set; } = new BBox(new Vector3(-16, -16, 0), new Vector3(16, 16, 72));
+		
 		public override void Spawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -89,7 +91,7 @@ namespace BoxBusters.Entities
 		
 		public TraceResult TraceBoundingBox( Vector3 start, Vector3 end, float liftFeet = 0.0f )
 		{
-			return TraceBoundingBox( start, end, CollisionBounds.Mins, CollisionBounds.Maxs, liftFeet );
+			return TraceBoundingBox( start, end, Hull.Mins, Hull.Maxs, liftFeet );
 		}
 
 		public TraceResult TraceBoundingBox( Vector3 start, Vector3 end, Vector3 boundMin, Vector3 boundMax, float liftFeet = 0.0f )

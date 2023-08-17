@@ -44,7 +44,7 @@ namespace BoxBusters.Entities.Components
 			}
 
 			MoveHelper mh = new MoveHelper( Entity.Position, Entity.Velocity );
-			mh.Trace = mh.Trace.Size( Entity.CollisionBounds ).Ignore( Entity );
+			mh.Trace = mh.Trace.Size( Entity.Hull ).Ignore( Entity );
 
 			if ( mh.TryMoveWithStep( Time.Delta, StepSize ) > 0 )
 			{
