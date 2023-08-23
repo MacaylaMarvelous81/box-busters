@@ -4,9 +4,17 @@ using Sandbox;
 
 namespace BoxBusters.Entities.Factory
 {
+	/// <summary>
+	/// A factory which produces and configures pawns.
+	/// </summary>
 	public class PawnFactory
 	{
-		public static IEntity CreatePlayerPawn(IPawnFactory factory)
+		/// <summary>
+		/// Creates a pawn and moves it to a spawn point.
+		/// </summary>
+		/// <param name="factory">The <see cref="IPawnFactory"/> to use.</param>
+		/// <returns>The new pawn.</returns>
+		public static IEntity SpawnPawn(IPawnFactory factory)
 		{
 			IEntity pawn = factory.CreatePawn();
 

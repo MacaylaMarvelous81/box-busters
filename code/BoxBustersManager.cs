@@ -10,7 +10,7 @@ namespace BoxBusters
 		{
 			base.ClientJoined( cl );
 
-			IEntity pawn = PawnFactory.CreatePlayerPawn( new PlayerPawnFactory() );
+			IEntity pawn = PawnFactory.SpawnPawn( new PlayerPawnFactory() );
 			cl.Pawn = pawn;
 		}
 	}
