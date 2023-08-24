@@ -76,8 +76,8 @@ namespace BoxBusters.Entities.Items
 		/// Behavior for when the item is picked up by an entity.
 		/// </summary>
 		/// <remarks>
-		/// By default, it will set the item's parent and owner to the <paramref name="carrier"/>, and disable
-		/// collisions and drawing.
+		/// By default, it will set the item's parent and owner to the <paramref name="carrier"/>, and become invisible
+		/// and intangible.
 		/// </remarks>
 		/// <param name="carrier">The new owner of the item.</param>
 		protected virtual void OnCarryStart( Entity carrier )
@@ -95,14 +95,35 @@ namespace BoxBusters.Entities.Items
 		}
 
 		/// <summary>
-		/// The behavior for when the item is dropped by an entity.
+		/// The behavior for when the item is dropped back into the world by an entity.
 		/// </summary>
 		/// <remarks>
-		/// By default, it will enable drawing for the item, and for the local client, recreate the view model and
-		/// HUD elements.
+		/// By default, it will become unowned, and become visible and tangible.
 		/// </remarks>
 		/// <param name="dropper">The former owner of the item.</param>
 		protected virtual void OnCarryDrop( Entity dropper )
+		{
+			// Don't do anything on the client, let s&box network.
+			if ( Game.IsClient )
+			{
+				return;
+			}
+			
+			SetParent( null );
+			Owner = null;
+			EnableAllCollisions = true;
+			EnableDrawing = true;
+		}
+
+		/// <summary>
+		/// The behavior for when an entity starts to actively use the item.
+		/// </summary>
+		/// <remarks>
+		/// By default, it enables drawing the item, and (re)creates the view model and HUD elements for the local
+		/// player.
+		/// </remarks>
+		/// <param name="entity">The entity using the item.</param>
+		internal virtual void ActiveStart( Entity entity )
 		{
 			EnableDrawing = true;
 
@@ -110,9 +131,31 @@ namespace BoxBusters.Entities.Items
 			{
 				DestroyViewModel();
 				DestroyHudElements();
-
+				
 				CreateViewModel();
 				CreateHudElements();
+			}
+		}
+
+		/// <summary>
+		/// The behavior for when an entity stops actively using the item.
+		/// </summary>
+		/// <remarks>
+		/// By default, it disables drawing the item if it wasn't dropped, and destroys the view model and HUD elements.
+		/// </remarks>
+		/// <param name="entity">The entity that used the item.</param>
+		/// <param name="dropped">Whether the entity stopped using the item because they dropped it.</param>
+		internal virtual void ActiveEnd( Entity entity, bool dropped )
+		{
+			if ( !dropped )
+			{
+				EnableDrawing = false;
+			}
+
+			if ( IsLocalPawn )
+			{
+				DestroyViewModel();
+				DestroyHudElements();
 			}
 		}
 
