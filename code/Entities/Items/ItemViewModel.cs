@@ -2,6 +2,9 @@
 
 namespace BoxBusters.Entities.Items
 {
+	/// <summary>
+	/// The viewmodel for items without any special viewmodel behaviour.
+	/// </summary>
 	public class ItemViewModel : BaseViewModel
 	{
 		public ItemViewModel()
