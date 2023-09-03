@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using BoxBusters.Entities.Components;
+using BoxBusters.Entities.Items;
 using Sandbox;
 
 namespace BoxBusters.Entities
@@ -94,6 +95,9 @@ namespace BoxBusters.Entities
 			EnableShadowInFirstPerson = true;
 
 			Components.Create<PlayerPawnController>();
+			Components.Create<InventoryComponent>();
+
+			Components.Get<InventoryComponent>().AddItem( new LaserGun(), true );
 		}
 
 		public override void BuildInput()
@@ -126,8 +130,9 @@ namespace BoxBusters.Entities
 			Rotation = ViewAngles.WithPitch( 0 ).ToRotation();
 			EyeLocalPosition = Vector3.Up * (64f * Scale);
 			
-			// TODO: Base controller class, and entities simulate them automatically
+			// TODO: Automatic component simulation
 			Components.Get<PlayerPawnController>().Simulate( cl );
+			Components.Get<InventoryComponent>().Simulate( cl );
 		}
 
 		public override void FrameSimulate( IClient cl )
