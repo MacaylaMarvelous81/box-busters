@@ -11,16 +11,53 @@ namespace BoxBusters.Entities.Components
 		[Net, Predicted]
 		public Entity ActiveEntity { get; set; }
 		
+		[Predicted]
+		public Entity LastActiveEntity { get; private set; }
+		
 		public int Count => _items.Count;
 
 		public void Simulate( IClient cl )
 		{
-			ActiveEntity?.Simulate( cl );
+			if ( LastActiveEntity != ActiveEntity )
+			{
+				if ( LastActiveEntity is Item lastItem )
+				{
+					lastItem.ActiveEnd( Entity, lastItem.Owner != Entity );
+				}
+
+				if ( ActiveEntity is Item activeItem )
+				{
+					activeItem.ActiveStart( Entity );
+				}
+				
+				LastActiveEntity = ActiveEntity;
+			}
+
+			if ( !LastActiveEntity.IsValid )
+			{
+				return;
+			}
+
+			if ( LastActiveEntity.IsAuthority )
+			{
+				LastActiveEntity.Simulate( cl );
+			}
 		}
 
 		public bool CanAddItem( Entity entity )
 		{
 			return entity is Item item && item.CanCarry( Entity );
+		}
+
+		public bool SetActiveEntity( Entity entity )
+		{
+			if ( ActiveEntity == entity || !_items.Contains( entity ))
+			{
+				return false;
+			}
+
+			ActiveEntity = entity;
+			return true;
 		}
 
 		public bool AddItem( Entity entity, bool makeActive )
@@ -44,7 +81,7 @@ namespace BoxBusters.Entities.Components
 
 			if ( makeActive )
 			{
-				ActiveEntity = entity;
+				SetActiveEntity( entity );
 			}
 
 			return true;
@@ -62,7 +99,7 @@ namespace BoxBusters.Entities.Components
 
 		public void SetActiveSlot( int slot )
 		{
-			ActiveEntity = AtSlot( slot );
+			SetActiveEntity( AtSlot( slot ) );
 		}
 
 		public void DropSlot( int slot )
