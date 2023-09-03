@@ -170,12 +170,10 @@ namespace BoxBusters.Entities.Items
 			{
 				return;
 			}
-			
-			ViewModelEntity = new BaseViewModel();
-			ViewModelEntity.Position = Position;
-			ViewModelEntity.Owner = Owner;
-			ViewModelEntity.EnableViewmodelRendering = true;
-			ViewModelEntity.SetModel( ViewModelPath );
+
+			ItemViewModel viewModel = new ItemViewModel();
+			viewModel.SetModel( ViewModelPath );
+			ViewModelEntity = viewModel;
 		}
 
 		/// <summary>
@@ -183,7 +181,7 @@ namespace BoxBusters.Entities.Items
 		/// </summary>
 		private void DestroyViewModel()
 		{
-			ViewModelEntity.Delete();
+			ViewModelEntity?.Delete();
 			ViewModelEntity = null;
 		}
 		
