@@ -27,17 +27,6 @@ namespace BoxBusters.Entities.Items
 		protected BaseViewModel ViewModelEntity { get; private set; }
 
 		/// <summary>
-		/// Gets a value indicating whether item can be carried.
-		/// </summary>
-		/// <remarks>
-		/// By default, items can always be carried.
-		/// </remarks>
-		/// <value>
-		/// true if the item can be carried, false otherwise.
-		/// </value>
-		public virtual bool CanCarry => true;
-
-		/// <summary>
 		/// Gets a reference to the entity at which effects should be played on.
 		/// </summary>
 		/// <remarks>
@@ -73,6 +62,13 @@ namespace BoxBusters.Entities.Items
 		}
 
 		/// <summary>
+		/// Determines whether the item can be carried by an entity.
+		/// </summary>
+		/// <param name="carrier">The entity in question.</param>
+		/// <returns>true if the item can be carried, false otherwise.</returns>
+		public virtual bool CanCarry( Entity carrier ) => true;
+
+		/// <summary>
 		/// Behavior for when the item is picked up by an entity.
 		/// </summary>
 		/// <remarks>
@@ -80,7 +76,7 @@ namespace BoxBusters.Entities.Items
 		/// and intangible.
 		/// </remarks>
 		/// <param name="carrier">The new owner of the item.</param>
-		protected virtual void OnCarryStart( Entity carrier )
+		protected internal virtual void OnCarryStart( Entity carrier )
 		{
 			// Don't do anything on the client, let s&box network.
 			if ( Game.IsClient )
@@ -101,7 +97,7 @@ namespace BoxBusters.Entities.Items
 		/// By default, it will become unowned, and become visible and tangible.
 		/// </remarks>
 		/// <param name="dropper">The former owner of the item.</param>
-		protected virtual void OnCarryDrop( Entity dropper )
+		protected internal virtual void OnCarryDrop( Entity dropper )
 		{
 			// Don't do anything on the client, let s&box network.
 			if ( Game.IsClient )
@@ -123,7 +119,7 @@ namespace BoxBusters.Entities.Items
 		/// player.
 		/// </remarks>
 		/// <param name="entity">The entity using the item.</param>
-		internal virtual void ActiveStart( Entity entity )
+		protected internal virtual void ActiveStart( Entity entity )
 		{
 			EnableDrawing = true;
 
@@ -145,7 +141,7 @@ namespace BoxBusters.Entities.Items
 		/// </remarks>
 		/// <param name="entity">The entity that used the item.</param>
 		/// <param name="dropped">Whether the entity stopped using the item because they dropped it.</param>
-		internal virtual void ActiveEnd( Entity entity, bool dropped )
+		protected internal virtual void ActiveEnd( Entity entity, bool dropped )
 		{
 			if ( !dropped )
 			{
